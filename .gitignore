@@ -1,0 +1,33 @@
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+hszz-backend/.idea
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+###code###
+/hszz-fontend/node_modules
+/hszz-fontend/dist/bundle.js
+/hszz-backend/target
+/hszz-backend/report
+/hszz-backend/src/main/resources/static/bundle.js
