@@ -20,9 +20,9 @@ class Order extends React.Component {
             method: 'GET'
         }).then((res) => {
             if (res.status === 200) {
-                // this.setState({
-                //     allModules: res.data.data
-                // });
+                this.setState({
+                    orderList: res.data
+                });
                 alert(res.data);
             } else {
                 console.log('get all modules failed!');
@@ -39,36 +39,29 @@ class Order extends React.Component {
     };
 
     handleSearch = (values) => {
-        const dataSource = [
-            {
-                sourceOfTourists: '巧克力',
-                customer: '海文',
-                product: '072/157-30ml 蒙砂瓶（含印）',
-                orderDate: '2020/03/19',
-                count: '1200',
-                remarks: '加急处理'
-            },
-            {
-                sourceOfTourists: '巧克力',
-                customer: '吴叔',
-                product: '072-50ml 光瓶（含印）+外罩黑色喷哑+泵头黑色',
-                orderDate: '2020/5/24',
-                count: '12096',
-                remarks: '丝印版面待确认'
-            }
-        ];
+        // const dataSource = [
+        //     {
+        //         sourceOfTourists: '巧克力',
+        //         customer: '海文',
+        //         product: '072/157-30ml 蒙砂瓶（含印）',
+        //         orderDate: '2020/03/19',
+        //         count: '1200',
+        //         remarks: '加急处理'
+        //     },
+        //     {
+        //         sourceOfTourists: '巧克力',
+        //         customer: '吴叔',
+        //         product: '072-50ml 光瓶（含印）+外罩黑色喷哑+泵头黑色',
+        //         orderDate: '2020/5/24',
+        //         count: '12096',
+        //         remarks: '丝印版面待确认'
+        //     }
+        // ];
 
 
         this.formRef.current.validateFields()
             .then((values) => {
-            if(values.sourceOfTourists=='a'){
-                this.setState({
-                    orderList: dataSource
-
-                });
-            }else{
-                alert(values.sourceOfTourists);
-            }
+                this.getAllOrders();
             })
             .catch((errors) => {
                 alert(values);
