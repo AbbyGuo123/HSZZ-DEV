@@ -1,27 +1,28 @@
 package com.hszz.hszzbackend.controller;
 
-import com.hszz.hszzbackend.Repository.OrderRepository;
 import com.hszz.hszzbackend.model.HSZZOrder;
+import com.hszz.hszzbackend.service.OrderService;
+import com.hszz.hszzbackend.vo.OrderCriteriaVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 /**
  * Created by guowanyi on 2020/10/25.
  */
-@Controller
+@RestController
 @RequestMapping("/order")
 public class OrderController {
     @Autowired
-    OrderRepository orderRepository;
+    OrderService orderService;
 
-    @RequestMapping("/list")
+    @GetMapping("/order")
     @ResponseBody
-    public List<HSZZOrder> getAllOrder() {
-
-        return orderRepository.findAll();
+    public List<HSZZOrder> getAllOrder(OrderCriteriaVO orderCriteriaVO) {
+        return orderService.getOrderResult(orderCriteriaVO);
     }
 }

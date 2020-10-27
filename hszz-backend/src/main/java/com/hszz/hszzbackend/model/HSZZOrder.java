@@ -1,12 +1,7 @@
 package com.hszz.hszzbackend.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.time.LocalTime;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by guowanyi on 2020/10/26.
