@@ -1,107 +1,61 @@
-import React from 'react';
-import { Form, Input, Button, Select } from 'antd';
-const { Option } = Select;
-const layout = {
-    labelCol: {
-        span: 8,
-    },
-    wrapperCol: {
-        span: 16,
-    },
-};
-const tailLayout = {
-    wrapperCol: {
-        offset: 8,
-        span: 16,
-    },
-};
+import {Breadcrumb, Layout, Menu} from "antd";
+import React from "react";
+import {DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined} from "@ant-design/icons";
+
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
 
 export default class test extends React.Component {
-    formRef = React.createRef();
-    onGenderChange = (value) => {
-        this.formRef.current.setFieldsValue({
-            note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-        });
+    state = {
+        collapsed: false,
     };
-    onFinish = (values) => {
-        console.log(values);
-    };
-    onReset = () => {
-        this.formRef.current.resetFields();
-    };
-    onFill = () => {
-        this.formRef.current.setFieldsValue({
-            note: 'Hello world!',
-            gender: 'male',
-        });
+
+    onCollapse = collapsed => {
+        console.log(collapsed);
+        this.setState({ collapsed });
     };
 
     render() {
+        const { collapsed } = this.state;
         return (
-            <Form {...layout} ref={this.formRef} name="control-ref" onFinish={this.onFinish}>
-                <Form.Item
-                    name="note"
-                    label="Note"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="gender"
-                    label="Gender"
-                    rules={[
-                        {
-                            required: true,
-                        },
-                    ]}
-                >
-                    <Select
-                        placeholder="Select a option and change input text above"
-                        onChange={this.onGenderChange}
-                        allowClear
-                    >
-                        <Option value="male">male</Option>
-                        <Option value="female">female</Option>
-                        <Option value="other">other</Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item
-                    noStyle
-                    shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
-                >
-                    {({ getFieldValue }) => {
-                        return getFieldValue('gender') === 'other' ? (
-                            <Form.Item
-                                name="customizeGender"
-                                label="Customize Gender"
-                                rules={[
-                                    {
-                                        required: true,
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        ) : null;
-                    }}
-                </Form.Item>
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                    <Button htmlType="button" onClick={this.onReset}>
-                        Reset
-                    </Button>
-                    <Button type="link" htmlType="button" onClick={this.onFill}>
-                        Fill form
-                    </Button>
-                </Form.Item>
-            </Form>
+            <Layout style={{ minHeight: '100vh' }}>
+                <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+                    <div className="logo" />
+                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                        <Menu.Item key="1" icon={<PieChartOutlined />}>
+                            Option 1
+                        </Menu.Item>
+                        <Menu.Item key="2" icon={<DesktopOutlined />}>
+                            Option 2
+                        </Menu.Item>
+                        <SubMenu key="sub1" icon={<UserOutlined />} title="User">
+                            <Menu.Item key="3">Tom</Menu.Item>
+                            <Menu.Item key="4">Bill</Menu.Item>
+                            <Menu.Item key="5">Alex</Menu.Item>
+                        </SubMenu>
+                        <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
+                            <Menu.Item key="6">Team 1</Menu.Item>
+                            <Menu.Item key="8">Team 2</Menu.Item>
+                        </SubMenu>
+                        <Menu.Item key="9" icon={<FileOutlined />}>
+                            Files
+                        </Menu.Item>
+                    </Menu>
+                </Sider>
+                <Layout className="site-layout">
+                    <Header className="site-layout-background" style={{ padding: 0 }} />
+                    <Content style={{ margin: '0 16px' }}>
+                        <Breadcrumb style={{ margin: '16px 0' }}>
+                            <Breadcrumb.Item>User</Breadcrumb.Item>
+                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+                        </Breadcrumb>
+                        <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                            Bill is a cat.
+                        </div>
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                </Layout>
+            </Layout>
         );
     }
 }
-

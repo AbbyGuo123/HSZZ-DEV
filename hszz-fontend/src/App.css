@@ -38,3 +38,12 @@
     transform: rotate(360deg);
   }
 }
+
+.ant-form-item{
+  width:100%;
+  font-size: 20px;
+  align-items:center;
+  lable-width:20px
+
+}
+

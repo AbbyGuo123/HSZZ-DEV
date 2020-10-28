@@ -22,17 +22,17 @@ class Order extends React.Component {
     getOrderSearchResult = (values) => {
         let orderCriteria = {};
         if (values !== undefined) {
-            let hasEsrFromTo = (values.orderDateRange === undefined || values.orderDateRange.length === 0);
+            let hasEsrFromTo = (values.orderDateRange === undefined ||values.orderDateRange === null || values.orderDateRange.length === 0);
             orderCriteria = {
                 sourceOfTourists: values.sourceOfTourists == undefined ? null : values.sourceOfTourists,
-                customer:values.customer== undefined ? null : values.customer,
+                customer:values.customer == undefined ? null : values.customer,
                 startDate: hasEsrFromTo ? null : values.orderDateRange[0].format('YYYY-MM-DD'),
                 endDate: hasEsrFromTo ? null : values.orderDateRange[1].format('YYYY-MM-DD')
             }
         }
 
         axios.request({
-            url: '/api/order/order',
+            url: '/api/order',
             method: 'GET',
             params: orderCriteria
         }).then((res) => {
@@ -134,7 +134,7 @@ class Order extends React.Component {
         ];
         return (
             <div className="order">
-                <div className="order-search">
+                <div className="order-search" style={{height:'200px'}}>
                     <Form {...formItemLayout} ref={this.formRef} className="ant-advanced-search-form"
                           onFinish={this.handleSearch}>
                         <Row gutter={16}>

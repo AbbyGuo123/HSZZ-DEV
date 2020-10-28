@@ -1,14 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './App.css';
-import { BrowserRouter} from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import "./App.css";
+import {BrowserRouter} from "react-router-dom";
 import MainPage from "./components/MainPage";
 
 ReactDOM.render(
     <BrowserRouter>
-        <div>
-            <MainPage/>
-        </div>
+        <MainPage/>
     </BrowserRouter>,
     document.getElementById('root')
 );
