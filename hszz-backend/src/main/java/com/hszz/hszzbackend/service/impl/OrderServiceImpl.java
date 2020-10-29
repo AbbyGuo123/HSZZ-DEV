@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Predicate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +51,20 @@ public class OrderServiceImpl implements OrderService {
 
 
     private HSZZOrder HszzOrderAssembler(OrderVO orderVO) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date orderDate = null;
+        try {
+            orderDate = simpleDateFormat.parse(orderVO.getOrderDate());
+        } catch (ParseException e) {
+            System.out.print("Can not parse date string"+ orderVO.getOrderDate());
+        }
+
         HSZZOrder order = new HSZZOrder();
         order.setSourceOfTourists(orderVO.getSourceOfTourists());
         order.setCustomer(orderVO.getCustomer());
         order.setProduct(orderVO.getProduct());
         order.setCount(orderVO.getCount());
-        order.setOrderDate(new Date());
+        order.setOrderDate(orderDate);
         order.setRemarks(orderVO.getRemarks());
         return order;
     }

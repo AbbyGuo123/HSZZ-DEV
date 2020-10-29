@@ -21,30 +21,32 @@ const validateMessages = {
 };
 
 export default class AddOrder extends React.Component {
+    formRef = React.createRef();
     handleAdd = (values) => {
-        if(values == undefined ||values==null || values.order==undefined ||values.order==null){
+        if (values == undefined || values == null || values.order == undefined || values.order == null) {
             alert('订单内容为空！')
         }
         let orderVO = {
-            sourceOfTourists:values.order.sourceOfTourists,
-            customer:values.order.customer,
-            product:values.order.product,
-            count:values.order.count,
-            orderDate:values.order.orderDate == null?null:values.order.orderDate.format('YYYY-MM-DD'),
-            remarks:values.order.remarks,
+            sourceOfTourists: values.order.sourceOfTourists,
+            customer: values.order.customer,
+            product: values.order.product,
+            count: values.order.count,
+            orderDate: values.order.orderDate == null ? null : values.order.orderDate.format('YYYY-MM-DD'),
+            remarks: values.order.remarks,
         };
         axios.request({
-            url:'api/order',
-            method:'POST',
-            params:orderVO
-        }).then((res)=>{
-            if(res.status === 200){
+            url: 'api/order',
+            method: 'POST',
+            params: orderVO
+        }).then((res) => {
+            if (res.status === 200) {
                 alert('订单录入成功！');
-            }else {
+            } else {
                 alert('订单录入失败！');
             }
 
-        })
+        });
+        this.handleReset();
     };
 
     handleReset = () => {
@@ -55,11 +57,12 @@ export default class AddOrder extends React.Component {
         return (
             <div >
                 <div>
-                    <h2 style={{margin: '10px 5px', height:'60px'}}>订单录入</h2>
+                    <h2 style={{margin: '10px 5px', height: '60px'}}>订单录入</h2>
                 </div>
 
                 <div style={{width: 800, margin: 'auto', marginLeft: 8}}>
-                    <Form {...layout} name="nest-messages" onFinish={this.handleAdd} validateMessages={validateMessages}>
+                    <Form {...layout} name="nest-messages" ref={this.formRef} onFinish={this.handleAdd}
+                          validateMessages={validateMessages}>
                         <Form.Item
                             name={['order', 'sourceOfTourists']}
                             label="主客源"
@@ -69,7 +72,7 @@ export default class AddOrder extends React.Component {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input style={{width: 400}}/>
                         </Form.Item>
                         <Form.Item
                             name={['order', 'customer']}
@@ -80,14 +83,23 @@ export default class AddOrder extends React.Component {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input style={{width: 400}}/>
                         </Form.Item>
 
-                        <Form.Item
-                            name={['order', 'orderDate']}
-                            label="签单日期"
-                        >
-                            <DatePicker/>
+
+                        <Form.Item name={['order', 'product']} label="产品明细" rules={[
+                            {
+                                required: true,
+                            },
+                        ]}>
+                            <Input.TextArea style={{width: 400}}/>
+                        </Form.Item>
+                        <Form.Item name={['order', 'remarks']} label="备注" rules={[
+                            {
+                                required: true,
+                            },
+                        ]}>
+                            <Input.TextArea style={{width: 400}}/>
                         </Form.Item>
                         <Form.Item
                             name={['order', 'count']}
@@ -100,24 +112,17 @@ export default class AddOrder extends React.Component {
                                 },
                             ]}
                         >
-                            <InputNumber/>
+                            <InputNumber style={{width: 400}}/>
                         </Form.Item>
-                        <Form.Item name={['order', 'product']} label="产品明细" rules={[
-                            {
-                                required: true,
-                            },
-                        ]}>
-                            <Input.TextArea />
+                        <Form.Item
+                            name={['order', 'orderDate']}
+                            label="签单日期"
+                        >
+                            <DatePicker style={{width: 400}}/>
                         </Form.Item>
-                        <Form.Item name={['order', 'remarks']} label="备注" rules={[
-                            {
-                                required: true,
-                            },
-                        ]}>
-                            <Input.TextArea />
-                        </Form.Item>
-                        <div style={{height:'50px'}}></div>
-                        <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}} >
+
+                        <div style={{height: '50px'}}></div>
+                        <Form.Item wrapperCol={{...layout.wrapperCol, offset: 8}}>
                             <Row>
                                 <Col span={24} style={{textAlign: 'right'}}>
                                     <Button type="primary" htmlType="submit">提交</Button>
@@ -125,6 +130,7 @@ export default class AddOrder extends React.Component {
                                 </Col>
                             </Row>
                         </Form.Item>
+
                     </Form>
                 </div>
             </div>
